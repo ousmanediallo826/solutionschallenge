@@ -1,0 +1,39 @@
+[
+    {
+      "occupation": "All Occupations (00-0000)",
+      "employment": 37490,
+      "hourly_wage": 55.0,
+      "annual_wage": 114401.23
+    },
+    {
+      "occupation": "A (11-0000)",
+      "employment": 4811,
+      "hourly_wage": 63.64,
+      "annual_wage": 132371.2
+    },
+    {
+      "occupation": "B (12-0000)",
+      "employment": 8648,
+      "hourly_wage": 57.34,
+      "annual_wage": 119267.2
+    },
+    {
+      "occupation": "C (13-0000)",
+      "employment": 9168,
+      "hourly_wage": 62.46,
+      "annual_wage": 129916.8
+    },
+    {
+      "occupation": "D (14-0000)",
+      "employment": 5207,
+      "hourly_wage": 57.39,
+      "annual_wage": 119371.2
+    },
+    {
+      "occupation": "E (15-0000)",
+      "employment": 9656,
+      "hourly_wage": 40.23,
+      "annual_wage": 83678.4
+    }
+  ]
+  
