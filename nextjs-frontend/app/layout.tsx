@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+// Remove useRouter if not needed
+import Login from "./page/login"; // Ensure it's a valid component
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,14 +21,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Login /> {/* Ensure it's a valid React component */}
         {children}
       </body>
     </html>
