@@ -15,7 +15,7 @@ const chartData = [
   },
 ];
 
-console.log(chartData);
+console.log("Chart Data:", chartData);
 
 const spec: ICirclePackingChartSpec = {
   data: [
@@ -35,36 +35,20 @@ const spec: ICirclePackingChartSpec = {
       fill: "white",
       stroke: false,
       visible: (d) => d.depth > 0,
-      text: (d) => addThousandsSeparator(d.value),
+      text: (d) => d.value,//addThousandsSeparator(d.value)
       fontSize: (d) => d.radius / 2,
       dy: (d) => d.radius / 8,
+      
     },
   },
-  legends: {
-    visible: true,
-    orient: "top",
-    position: "start",
-    padding: 0,
-    field: "name", // Use the "name" field for legend labels
-  },
-  /*
   tooltip: {
     trigger: ["click", "hover"],
     mark: {
       content: {
         value: (d) => {
-          console.log(d); // Logs the data to the browser console for debugging
-          return addThousandsSeparator(d?.value); // Returns the formatted value to display in the tooltip
+          console.log("Tooltip Data:", d); // Debugging
+          return d?.value ?? "No data"; // Fallback if `d.value` is undefined
         },
-      },
-    },
-  },*/
-  tooltip: {
-    trigger: ["click", "hover"],
-    mark: {
-      content: {
-        // title: (d) => d.name,
-        value: (d) => `${d?.name ?? "Unknown"}: ${addThousandsSeparator(d?.value ?? 0)}`,
       },
     },
   },
