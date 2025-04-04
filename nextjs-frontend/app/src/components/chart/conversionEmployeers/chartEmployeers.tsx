@@ -4,7 +4,6 @@ import { VChart } from "@visactor/react-vchart";
 import type { ICirclePackingChartSpec } from "@visactor/vchart";
 import convertions from "@/app/app-data/convertionOcupation";
 
-// 🎨 Extended vivid color palette
 const colors = [
   "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
   "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf",
@@ -13,16 +12,19 @@ const colors = [
   "#1982c4", "#6a4c93", "#ffca3a", "#8ac926"
 ];
 
+
+
 // 🔢 Deterministic hash-to-colorIndex function
+
 function getColorIndex(name: string): number {
   let hash = 0;
   for (let i = 0; i < name.length; i++) {
     hash = name.charCodeAt(i) + ((hash << 5) - hash);
   }
   return Math.abs(hash) % colors.length;
+
 }
 
-// 🧠 Format data with colorIndex and a root group
 const chartData = [
   {
     name: "Occupations",
@@ -34,9 +36,6 @@ const chartData = [
   }
 ];
 
-console.log("Chart Data:", chartData); // Debugging
-
-// 📊 VChart spec
 const spec: ICirclePackingChartSpec = {
   data: [
     {
@@ -47,7 +46,7 @@ const spec: ICirclePackingChartSpec = {
   type: "circlePacking",
   categoryField: "name",
   valueField: "value",
-  drill: false, // ❌ Disable zoom/click
+  drill: false,
 
   circlePacking: {
     style: {
@@ -55,16 +54,18 @@ const spec: ICirclePackingChartSpec = {
         const idx = d?.datum?.colorIndex;
         return d.isLeaf && typeof idx === "number" ? colors[idx] : "#ccc";
       },
-      fillOpacity: (d) => (d.isLeaf ? 0.85 : 0.25),
+      fillOpacity: (d) => (d.isLeaf ? 0.9 : 0.3), // Slightly increased opacity
       cursor: () => "default",
+      stroke: "#555", // Added a dark gray border
+      lineWidth: 0.75,
     },
   },
 
-  layoutPadding: [0, 10, 10],
+  layoutPadding: [10, 20, 20], // Slightly increased padding
 
   label: {
     style: {
-      fontSize: 10,
+      fontSize: 12, // Slightly larger label
       visible: (d) => d.depth === 1,
     },
   },
@@ -76,7 +77,10 @@ const spec: ICirclePackingChartSpec = {
         value: (d) => {
           const name = d?.datum?.name ?? "Unknown";
           const value = d?.value?.toLocaleString?.() ?? "N/A";
-          return `${name}<br/>Employment: ${value}`;
+          return [
+            { text: `${name}`, fontWeight: 'bold' },
+            { text: `\nEmployment: ${value}` },
+          ];
         },
       },
     },
@@ -85,6 +89,9 @@ const spec: ICirclePackingChartSpec = {
   title: {
     visible: true,
     text: "Occupational Employment",
+    style: {
+      fontSize: 18, // Larger title
+    }
   },
 
   animationEnter: { easing: "cubicInOut" },
@@ -94,7 +101,7 @@ const spec: ICirclePackingChartSpec = {
 
 export default function ChartEmployeeers() {
   return (
-    <div style={{ width: "100%", height: "600px" }}>
+    <div style={{ width: "900px", height: "700px" }}> {/* Increased container size */}
       <VChart spec={spec} />
     </div>
   );
