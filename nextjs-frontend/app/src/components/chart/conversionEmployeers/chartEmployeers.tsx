@@ -34,13 +34,15 @@ const chartData = [
   }
 ];
 
+console.log("Chart Data:", chartData); // Debugging
+
 // 📊 VChart spec
 const spec: ICirclePackingChartSpec = {
   data: [
     {
       id: "data",
-      values: chartData
-    }
+      values: chartData,
+    },
   ],
   type: "circlePacking",
   categoryField: "name",
@@ -54,8 +56,8 @@ const spec: ICirclePackingChartSpec = {
         return d.isLeaf && typeof idx === "number" ? colors[idx] : "#ccc";
       },
       fillOpacity: (d) => (d.isLeaf ? 0.85 : 0.25),
-      cursor: () => "default"
-    }
+      cursor: () => "default",
+    },
   },
 
   layoutPadding: [0, 10, 10],
@@ -64,7 +66,7 @@ const spec: ICirclePackingChartSpec = {
     style: {
       fontSize: 10,
       visible: (d) => d.depth === 1,
-    }
+    },
   },
 
   tooltip: {
@@ -75,19 +77,19 @@ const spec: ICirclePackingChartSpec = {
           const name = d?.datum?.name ?? "Unknown";
           const value = d?.value?.toLocaleString?.() ?? "N/A";
           return `${name}<br/>Employment: ${value}`;
-        }
-      }
-    }
+        },
+      },
+    },
   },
 
   title: {
     visible: true,
-    text: "Occupational Employment"
+    text: "Occupational Employment",
   },
 
   animationEnter: { easing: "cubicInOut" },
   animationExit: { easing: "cubicInOut" },
-  animationUpdate: { easing: "cubicInOut" }
+  animationUpdate: { easing: "cubicInOut" },
 };
 
 export default function ChartEmployeeers() {
