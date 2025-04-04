@@ -1,6 +1,6 @@
 import React from "react";
 import "./login.css";
-import logo from "../../public/logo.webp"
+//import logo from "../../public/logo.webp"
 import Image from "next/image"
 export default function Login() {
   return (
@@ -9,10 +9,12 @@ export default function Login() {
         {/* Logo */}
 <div className="flex justify-center">
 <Image 
-        src="/public/logo.webp"  // Ensure this matches the filename in the `public` folder
-        alt="Solution Challenge Logo"
-        width={40} 
-        height={40} 
+        //src="/public/logo.webp"  // Ensure this matches the filename in the `public` folder
+      src="/logo.webp"   
+
+      alt="Logo"
+        width={80} 
+        height={80} 
         className="rounded-full object-cover"
       />
 </div>
@@ -36,7 +38,7 @@ export default function Login() {
 
 
         {/* Sign-in Button */}
-        <button className="w-full rounded-md bg-black px-4 py-2 text-white font-semibold hover:bg-gray-900">
+        <button className="w-full rounded-md bg-blue-600 px-4 py-2 text-white font-semibold hover:bg-blue-700">
           Login
         </button>
 
@@ -48,7 +50,8 @@ export default function Login() {
         </div>
 
         {/* GitHub Login Button */}
-        <button className="w-full flex items-center justify-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 font-semibold hover:bg-gray-100">
+        <button className="w-full flex items-center justify-center gap-2 rounded-md border border-black bg-black px-4 py-2 text-white font-semibold hover:bg-gray-900">
+
           <svg
             className="h-5 w-5"
             fill="currentColor"
