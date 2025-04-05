@@ -28,7 +28,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-6">
-      <div className="text-center mb-6">
+      <div className="text-2xl font-bold text-center mb-6">
         All employeers from public, private and government sectors.
       </div>
       {/* Add spacing between the buttons and <Info /> */}
