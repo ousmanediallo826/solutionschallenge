@@ -4,6 +4,7 @@ import { VChart } from "@visactor/react-vchart";
 import type { ICirclePackingChartSpec } from "@visactor/vchart";
 import convertions from "@/app/app-data/convertionOcupation";
 
+// 🎨 Color Palette
 const colors = [
   "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
   "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf",
@@ -12,19 +13,16 @@ const colors = [
   "#1982c4", "#6a4c93", "#ffca3a", "#8ac926"
 ];
 
-
-
 // 🔢 Deterministic hash-to-colorIndex function
-
 function getColorIndex(name: string): number {
   let hash = 0;
   for (let i = 0; i < name.length; i++) {
     hash = name.charCodeAt(i) + ((hash << 5) - hash);
   }
   return Math.abs(hash) % colors.length;
-
 }
 
+// 📊 Chart Data
 const chartData = [
   {
     name: "Occupations",
@@ -36,6 +34,7 @@ const chartData = [
   }
 ];
 
+// 🛠️ Chart Specification
 const spec: ICirclePackingChartSpec = {
   data: [
     {
@@ -61,7 +60,7 @@ const spec: ICirclePackingChartSpec = {
     },
   },
 
-  layoutPadding: [10, 20, 20], // Slightly increased padding
+  layoutPadding: [10, 10, 10], // Slightly increased padding
 
   label: {
     style: {
@@ -78,7 +77,7 @@ const spec: ICirclePackingChartSpec = {
           const name = d?.datum?.name ?? "Unknown";
           const value = d?.value?.toLocaleString?.() ?? "N/A";
           return [
-            { text: `${name}`, fontWeight: 'bold' },
+            { text: `${name}`, fontWeight: "bold" },
             { text: `\nEmployment: ${value}` },
           ];
         },
@@ -91,7 +90,7 @@ const spec: ICirclePackingChartSpec = {
     text: "Occupational Employment",
     style: {
       fontSize: 18, // Larger title
-    }
+    },
   },
 
   animationEnter: { easing: "cubicInOut" },
@@ -99,9 +98,10 @@ const spec: ICirclePackingChartSpec = {
   animationUpdate: { easing: "cubicInOut" },
 };
 
+// 🖼️ Chart Component
 export default function ChartEmployeeers() {
   return (
-    <div style={{ width: "900px", height: "700px" }}> {/* Increased container size */}
+    <div style={{ width: "400px", height: "300px" }}> {/* Increased container size */}
       <VChart spec={spec} />
     </div>
   );
