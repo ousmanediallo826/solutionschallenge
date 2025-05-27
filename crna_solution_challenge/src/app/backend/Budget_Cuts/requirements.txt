@@ -1,0 +1,6 @@
+google-cloud-run          # To control Cloud Run services
+google-cloud-functions    # To control other Cloud Functions (less common for self-control)
+google-cloud-bigquery     # To control BigQuery scheduled queries (via Data Transfer API)
+# google-cloud-billing    # If you need to programmatically disable billing (very advanced, use with extreme caution)
+# requests                # For sending notifications to Slack, PagerDuty, etc.
+# slack_sdk               # If sending Slack messages
