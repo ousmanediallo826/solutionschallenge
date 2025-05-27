@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRNA Compensation Data Submission</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background-color: #f4f7f6; color: #333; }
+        .container { max-width: 700px; margin: 30px auto; background-color: #fff; padding: 20px 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #2c3e50; }
+        p.intro { text-align: center; color: #555; margin-bottom: 25px; }
+        .form-section { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #eee; }
+        .form-section:last-of-type { border-bottom: none; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.95em; color: #34495e; }
+        input[type="text"], input[type="number"], select, textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            transition: border-color 0.2s;
+        }
+        input:focus, select:focus, textarea:focus { border-color: #007bff; outline: none; }
+        select { appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007AFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.9z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 10px center; background-size: 10px auto; padding-right: 30px;}
+        textarea { resize: vertical; }
+        .hint { font-size: 0.8em; color: #777; margin-top: 3px; }
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            background-color: #28a745;
+            color: white;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        button[type="submit"]:hover { background-color: #218838; }
+        button[type="submit"]:disabled { background-color: #aaa; cursor: not-allowed; }
+        .message-area { margin-top: 20px; padding: 12px; border-radius: 4px; text-align: center; }
+        .message-area.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .message-area.error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .error-text { color: red; font-size: 0.8em; margin-top: 4px; }
+        /* Basic responsiveness */
+        @media (max-width: 600px) {
+            .container { margin: 10px; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CRNA Compensation Survey</h1>
+        <p class="intro">Help us build an accurate, anonymous resource for the CRNA community. Your data will be aggregated and will not be individually identifiable. Fields marked with * are required.</p>
+
+        <form id="crnaCompensationForm">
+            <!-- Section 1: General & Location -->
+            <div class="form-section">
+                <h2>General Information</h2>
+                <div class="form-group">
+                    <label for="years_experience">Years of Experience as CRNA: *</label>
+                    <input type="number" id="years_experience" name="years_experience" min="0" max="60" step="0.5" required>
+                    <small class="error-text" id="years_experience_error"></small>
+                </div>
+                <div class="form-group">
+                    <label for="location_zip_code">Primary Work Location ZIP Code (5-digit): *</label>
+                    <input type="text" id="location_zip_code" name="location_zip_code" pattern="\d{5}" title="Enter a 5-digit ZIP code" required>
+                    <small class="hint">e.g., 90210</small>
+                    <small class="error-text" id="location_zip_code_error"></small>
+                </div>
+                 <div class="form-group">
+                    <label for="primary_state_of_licensure">Primary State of Licensure (2-letter code, e.g., CA, NY):</label>
+                    <input type="text" id="primary_state_of_licensure" name="primary_state_of_licensure" pattern="[A-Za-z]{2}" maxlength="2" title="Enter 2-letter state code">
+                    <small class="error-text" id="primary_state_of_licensure_error"></small>
+                </div>
+            </div>
+
+            <!-- Section 2: Employment Details -->
+            <div class="form-section">
+                <h2>Employment Details</h2>
+                <div class="form-group">
+                    <label for="employment_type">Employment Type: *</label>
+                    <select id="employment_type" name="employment_type" required>
+                        <option value="">-- Select Type --</option>
+                        <option value="W2">W2 Salaried/Hourly</option>
+                        <option value="1099/Contractor">1099/Independent Contractor</option>
+                        <option value="Part-time W2">Part-time W2</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <small class="error-text" id="employment_type_error"></small>
+                </div>
+                <div class="form-group">
+                    <label for="work_setting">Primary Work Setting: *</label>
+                    <select id="work_setting" name="work_setting" required>
+                        <option value="">-- Select Setting --</option>
+                        <option value="Hospital - Academic">Hospital - Academic</option>
+                        <option value="Hospital - Community">Hospital - Community</option>
+                        <option value="ASC">ASC (Ambulatory Surgery Center)</option>
+                        <option value="Office-Based">Office-Based Anesthesia (OBA)</option>
+                        <option value="VA/Military">VA/Military/Government</option>
+                        <option value="Locums">Locum Tenens</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <small class="error-text" id="work_setting_error"></small>
+                </div>
+            </div>
+
+            <!-- Section 3: Compensation Details -->
+            <div class="form-section">
+                <h2>Compensation</h2>
+                <div class="form-group">
+                    <label for="base_salary_annual">Annual Base Salary (numbers only; leave blank if not salaried W2):</label>
+                    <input type="number" id="base_salary_annual" name="base_salary_annual" min="0" step="1000" placeholder="e.g., 250000">
+                    <small class="error-text" id="base_salary_annual_error"></small>
+                </div>
+                <div class="form-group">
+                    <label for="hourly_rate_w2">W2 Hourly Rate (numbers only; leave blank if salaried W2 or 1099):</label>
+                    <input type="number" id="hourly_rate_w2" name="hourly_rate_w2" min="0" step="0.01" placeholder="e.g., 125.50">
+                    <small class="error-text" id="hourly_rate_w2_error"></small>
+                </div>
+                <div class="form-group">
+                    <label for="guaranteed_hours_w2">W2 Guaranteed Hours per Week (if applicable):</label>
+                    <input type="number" id="guaranteed_hours_w2" name="guaranteed_hours_w2" min="0" step="1" placeholder="e.g., 40">
+                    <small class="error-text" id="guaranteed_hours_w2_error"></small>
+                </div>
+                <div class="form-group">
+                    <label for="hourly_rate_1099">1099 Hourly Rate (numbers only; leave blank if W2):</label>
+                    <input type="number" id="hourly_rate_1099" name="hourly_rate_1099" min="0" step="0.01" placeholder="e.g., 150.00">
+                    <small class="error-text" id="hourly_rate_1099_error"></small>
+                </div>
+                 <div class="form-group">
+                    <label for="ot_rate_multiplier">Overtime Rate Multiplier (e.g., 1.5 for time and a half):</label>
+                    <input type="number" id="ot_rate_multiplier" name="ot_rate_multiplier" min="0" step="0.1" placeholder="e.g., 1.5">
+                    <small class="error-text" id="ot_rate_multiplier_error"></small>
+                </div>
+            </div>
+
+            <!-- Section 4: Call, Bonuses, Benefits -->
+            <div class="form-section">
+                <h2>Call, Bonuses & Benefits</h2>
+                <div class="form-group">
+                    <label for="call_stipend_type">Call Stipend Type:</label>
+                    <select id="call_stipend_type" name="call_stipend_type">
+                        <option value="">-- Not Applicable/None --</option>
+                        <option value="Per Diem">Per Diem</option>
+                        <option value="Hourly On Call">Hourly On Call</option>
+                        <option value="Activation Only">Activation Only (Pay per activation)</option>
+                        <option value="None">None (No separate stipend)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="call_stipend_amount">Call Stipend Amount (per instance of type selected above):</label>
+                    <input type="number" id="call_stipend_amount" name="call_stipend_amount" min="0" step="0.01" placeholder="e.g., 500 for per diem, or 25 for hourly">
+                    <small class="error-text" id="call_stipend_amount_error"></small>
+                </div>
+                <div class="form-group">
+                    <label for="bonus_potential_annual">Estimated Annual Bonus Potential (excluding sign-on):</label>
+                    <input type="number" id="bonus_potential_annual" name="bonus_potential_annual" min="0" step="100" placeholder="e.g., 15000">
+                </div>
+                <div class="form-group">
+                    <label for="sign_on_bonus">Sign-on Bonus (if any):</label>
+                    <input type="number" id="sign_on_bonus" name="sign_on_bonus" min="0" step="100" placeholder="e.g., 20000">
+                </div>
+                <div class="form-group">
+                    <label for="retention_bonus_terms">Retention Bonus Terms (e.g., "10k/year for 3 years"):</label>
+                    <input type="text" id="retention_bonus_terms" name="retention_bonus_terms" maxlength="200">
+                </div>
+                <div class="form-group">
+                    <label for="pto_weeks">Paid Time Off (PTO) - Weeks per Year:</label>
+                    <input type="number" id="pto_weeks" name="pto_weeks" min="0" max="52" step="0.5" placeholder="e.g., 6">
+                </div>
+                <div class="form-group">
+                    <label for="retirement_match_percentage">Retirement Match Percentage (e.g., 4 for 4%):</label>
+                    <input type="number" id="retirement_match_percentage" name="retirement_match_percentage" min="0" max="100" step="0.1" placeholder="e.g., 4.0">
+                </div>
+                <div class="form-group">
+                    <label for="cme_allowance_annual">Annual CME Allowance:</label>
+                    <input type="number" id="cme_allowance_annual" name="cme_allowance_annual" min="0" step="100" placeholder="e.g., 2500">
+                </div>
+                <div class="form-group">
+                    <label for="malpractice_coverage_type">Malpractice Coverage Type:</label>
+                    <select id="malpractice_coverage_type" name="malpractice_coverage_type">
+                        <option value="">-- Select / Not Sure --</option>
+                        <option value="Occurrence">Occurrence</option>
+                        <option value="Claims-Made">Claims-Made</option>
+                        <option value="Claims-Made with Tail">Claims-Made with Tail Provided</option>
+                        <option value="None">None (e.g., some 1099)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Section 5: Comments -->
+            <div class="form-section">
+                <h2>Additional Comments</h2>
+                <div class="form-group">
+                    <label for="comments">Any other relevant details, assumptions made, or qualitative aspects of your compensation (optional, max 500 characters):</label>
+                    <textarea id="comments" name="comments" rows="4" maxlength="500"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" id="submitButton">Submit Anonymously</button>
+            <div id="formMessage" class="message-area" style="display:none;"></div>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('crnaCompensationForm');
+        const formMessage = document.getElementById('formMessage');
+        const submitButton = document.getElementById('submitButton');
+        // IMPORTANT: Replace with your actual Cloud Run API Gateway URL
+        const apiEndpoint = 'https://crna-submission-api-1070240015256.us-central1.run.app/submit-crna-compensation'; 
+
+        // Client-side validation functions (examples)
+        function validateZipCode(zip) {
+            return /^\d{5}$/.test(zip); // Simple 5-digit check
+        }
+        function validateStateCode(state) {
+            if (!state || state.trim() === "") return true; // Optional field
+            return /^[A-Za-z]{2}$/.test(state);
+        }
+        // Add more specific client-side validators if needed
+
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+            formMessage.style.display = 'none';
+            formMessage.className = 'message-area';
+
+            // Clear previous errors
+            document.querySelectorAll('.error-text').forEach(el => el.textContent = '');
+            let clientSideErrors = false;
+
+            // Perform more detailed client-side validation
+            const yearsExp = form.elements['years_experience'].value;
+            if (yearsExp === '' || isNaN(parseFloat(yearsExp)) || parseFloat(yearsExp) < 0 || parseFloat(yearsExp) > 60) {
+                document.getElementById('years_experience_error').textContent = 'Valid years of experience (0-60) required.';
+                clientSideErrors = true;
+            }
+            
+            const zipCode = form.elements['location_zip_code'].value;
+            if (!validateZipCode(zipCode)) {
+                document.getElementById('location_zip_code_error').textContent = 'Valid 5-digit ZIP code required.';
+                clientSideErrors = true;
+            }
+
+            const stateCode = form.elements['primary_state_of_licensure'].value;
+            if (stateCode && !validateStateCode(stateCode)) { // only validate if field has value
+                document.getElementById('primary_state_of_licensure_error').textContent = 'If provided, must be a 2-letter state code.';
+                clientSideErrors = true;
+            }
+
+
+            if (clientSideErrors) {
+                formMessage.textContent = 'Please correct the errors highlighted above.';
+                formMessage.className = 'message-area error';
+                formMessage.style.display = 'block';
+                submitButton.disabled = false;
+                submitButton.textContent = 'Submit Anonymously';
+                return;
+            }
+
+            const formData = new FormData(form);
+            const data = {};
+            formData.forEach((value, key) => {
+                const element = form.elements[key];
+                let processedValue = value.trim(); // Trim whitespace
+
+                if (element.type === 'number') {
+                    if (processedValue === '') {
+                        data[key] = null; // Send null if number field is empty
+                    } else {
+                        // Try to parse as float, then int if it has no decimal, to preserve type
+                        const numVal = parseFloat(processedValue);
+                        data[key] = Number.isInteger(numVal) && !processedValue.includes('.') ? parseInt(processedValue) : numVal;
+                    }
+                } else if (element.tagName === 'SELECT' && processedValue === '') {
+                    data[key] = null; // Send null for empty select options if that's desired
+                }
+                 else if (processedValue !== "") { // Include non-empty strings
+                    data[key] = processedValue;
+                } else if (processedValue === "" && !element.required) { // Optional empty strings become null
+                    data[key] = null;
+                }
+                // If a field is not required and empty, it might not be added to 'data' unless explicitly handled
+            });
+            
+            // Ensure all keys defined in the form are present, even if null
+            for (const el of form.elements) {
+                if (el.name && !(el.name in data)) {
+                    if (el.type === 'number' || (el.tagName === 'SELECT' && el.value === '')) {
+                        data[el.name] = null;
+                    } else if (el.value.trim() === '' && !el.required) {
+                        data[el.name] = null;
+                    }
+                }
+            }
+
+
+            console.log('Submitting payload:', data);
+
+            try {
+                const response = await fetch(apiEndpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data),
+                });
+
+                const result = await response.json(); 
+
+                if (response.status === 202) { 
+                    formMessage.textContent = `Success: ${result.message} (Your Submission ID: ${result.submission_id})`;
+                    formMessage.classList.add('success');
+                    form.reset(); 
+                } else {
+                    let errorMessage = `Error ${response.status}: ${result.error || 'Unknown server error.'}`;
+                    if (result.details && typeof result.details === 'object') {
+                         errorMessage += ` Details: ${JSON.stringify(result.details)}`;
+                    } else if (result.details) {
+                        errorMessage += ` Details: ${result.details}`;
+                    }
+                    formMessage.textContent = errorMessage;
+                    formMessage.classList.add('error');
+                }
+            } catch (error) {
+                console.error('Submission error:', error);
+                formMessage.textContent = 'Submission failed due to a network or unexpected error. Please try again.';
+                formMessage.classList.add('error');
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Submit Anonymously';
+                formMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
