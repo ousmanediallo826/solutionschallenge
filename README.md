@@ -1,5 +1,4 @@
-# Solutions Challenge GDG 2025
-**AGGRATE (prototype)**
+# Solutions Challenge GDG 2025 - AGGRATE (prototype)
 
 **Challenge Prompts**
 ```
